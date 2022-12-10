@@ -1,7 +1,6 @@
 const express = require('express');
-const User = require('../../model/User');
-const { off } = require('../../model/User');
 const router = express.Router();
+const User = require('../../model/User');
 const { check, validationResult } = require('express-validator');
 const gravatar = require('gravatar');
 const bcrypt = require('bcryptjs');
@@ -69,6 +68,7 @@ async (req, res) => {
                     token
                 })
             })
+            console.log(token);
 
     } catch (err) {
         console.error(err.message);
