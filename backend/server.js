@@ -2,7 +2,7 @@ const express = require('express');
 const connectDB = require('./config/db');
 
 const app = express();
-//connectDB();
+connectDB();
 
 const database = [
     { id: 1, title: '글1'},
@@ -32,11 +32,15 @@ app.get('/database/:id', (req, res) => {
     const data = database.find((el)=> el.id === Number(id));
     res.send(data);
 })
-
-
 //값을 입력할때는 req.body를 이용해서 주로 사용한다.(post 메소드 사용) express 내 body_parser 필요
+//http 메소드를 통해서 api를 구분하는 방법 -> RESTFull한 Api ->URL를 바꿀필요 없이 작업가능
+//REST API
+// 생성: POST
+// 수정: PUT, PATCH
+// 삭제: DELETE
 
-app.post('/add-database', (req, res) => {
+
+app.post('/database', (req, res) => {
     const title = req.body.title;
     database.push({
         id: database.length + 1,
@@ -45,15 +49,15 @@ app.post('/add-database', (req, res) => {
     res.send('값이 추가되었습니다.');
 });
 
-app.post('/update-database', (req, res) => {
+app.put('/database', (req, res) => {
     const id = req.body.id;
     const title = req.body.title;
     database[ id - 1].title = title;
     res.send('값이 수정되었습니다.');
 });
 
-app.post('/delete-database', (req, res) => {
-    const id = req.body.id;
+app.delete('/database/:id', (req, res) => {
+    const id = req.params.id;
     database.splice(id - 1, 1);
     res.send('값이 삭제되었습니다.');
 });
